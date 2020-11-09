@@ -15,12 +15,12 @@ import android.widget.TextView;
 
 public class PageControl extends Fragment {
 
-    TextView url;
-    ImageButton go;
-    ImageButton back;
-    ImageButton forward;
-    buttonClick parentActivity;
-    String URL;
+    private TextView urlTextView;
+    private ImageButton go;
+    private ImageButton back;
+    private ImageButton forward;
+    private buttonClick parentActivity;
+    private String URL;
 
     private static final String URL_KEY = "url_key";
 
@@ -57,36 +57,47 @@ public class PageControl extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View V = inflater.inflate(R.layout.fragment_page_control, container, false);
-        url  = V.findViewById(R.id.url);
-        url.setText(URL);
+        urlTextView  = V.findViewById(R.id.url);
+        urlTextView.setText(URL);
         go = V.findViewById(R.id.go);
         go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                parentActivity.goButtonClick(URL);
+                parentActivity.goButtonClick(fixURL(urlTextView.getText().toString()));
             }
         });
         back = V.findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                parentActivity.backButtonClick(URL);
+                parentActivity.backButtonClick();
             }
         });
         forward = V.findViewById(R.id.forward);
         forward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                parentActivity.forwardButtonClick(URL);
+                parentActivity.forwardButtonClick();
             }
         });
         return V;
     }
 
+    public String fixURL(String url){
+        if(!url.startsWith("http://") && !url.startsWith("https://")){
+            return "https://" + url;
+        }else {
+            return url;
+        }
+    }
+
+    public void updateURL(String url){
+        urlTextView.setText(url);
+    }
 
     public interface buttonClick{
-        void backButtonClick(String url);
-        void forwardButtonClick(String url);
+        void backButtonClick();
+        void forwardButtonClick();
         void goButtonClick(String url);
     }
 

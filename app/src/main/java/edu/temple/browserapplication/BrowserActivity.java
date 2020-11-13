@@ -6,11 +6,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-public class BrowserActivity extends AppCompatActivity implements PageControl.buttonClick, PageViewer.updateWebView{
+public class BrowserActivity extends AppCompatActivity implements PageControl.buttonClick, PageViewer.updateWebView, BrowserControlFragment.browserControlInterface,
+PageListFragment.pageListInterface{
 
     PageViewer viewer;
     PageControl controller;
     FragmentManager manager;
+    PageListFragment pageList;
+    BrowserControlFragment browserControl;
+    PagerFragment pager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,26 @@ public class BrowserActivity extends AppCompatActivity implements PageControl.bu
                     .commit();
         }
 
+        if((temp = manager.findFragmentById(R.id.browser)) instanceof BrowserControlFragment){
+            browserControl = (BrowserControlFragment) temp;
+        }else{
+            browserControl = new BrowserControlFragment();
+            manager.beginTransaction()
+                    .add(R.id.browser, browserControl)
+                    .commit();
+        }
+
+        /**
+        if((temp = manager.findFragmentById(R.id.pageList)) instanceof PageListFragment){
+            pageList = (PageListFragment) temp;
+        }else{
+            pageList = new PageListFragment();
+            manager.beginTransaction()
+                    .add(R.id.pageList, pageList)
+                    .commit();
+        }
+         */
+
     }
 
     public void backButtonClick(){
@@ -57,4 +81,15 @@ public class BrowserActivity extends AppCompatActivity implements PageControl.bu
         controller.updateURL(url);
     }
 
+    public void newPage(){
+        pager.newPage();
+    }
+
+    public void newPageButton(){
+
+    }
+
+    public void updatePageList() {
+
+    }
 }

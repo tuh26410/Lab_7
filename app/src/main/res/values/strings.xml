@@ -4,6 +4,8 @@
     <string name="back_button"></string>
     <string name="forward_button"></string>
     <string name="go_button"></string>
+    <string name="tab">New Tab</string>
+    <string name="tabInstructions">Swipe Left or to go to the other tabs</string>
     <string name="hint">enter a url here</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
